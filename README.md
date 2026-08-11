@@ -22,7 +22,6 @@ experimental or publication data are included.
 Start with the self-contained notebook when reviewing the refactor. Use the
 modular demo when evaluating repository organization and reusable-code design.
 
-![Local curvature fit overlaid on a synthetic frame](results/frame_diagnostic.png)
 
 ## What the pipeline does
 
@@ -41,7 +40,6 @@ For each frame, the pipeline:
 
 7. Exports frame-level measurements, diagnostic overlays, and summary plots.
 
-![Bridge growth and curvature summary](results/curvature_summary.png)
 
 ## Verified demo results
 
@@ -167,7 +165,7 @@ the intensity threshold with edge detection or active-contour segmentation.
 
 ## Portfolio summary
 
-> Built a memory-conscious Python image-analysis pipeline for 500-frame,
-> high-speed TIFF stacks; extracted bridge geometry and curvature through local
-> polynomial modeling, validated the method against analytical curvature, and
-> refactored a repeated-fit bottleneck to reduce fitting operations by 15x.
+- Built a memory-conscious Python image-analysis pipeline for 500-frame,
+- high-speed TIFF stacks; extracted bridge geometry and curvature through local
+- polynomial modeling, validated the method against analytical curvature, and
+- refactored a repeated-fit bottleneck to reduce fitting operations by 15x.
