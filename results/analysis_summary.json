@@ -1,0 +1,18 @@
+{
+  "frames": 500,
+  "width_px": 504,
+  "height_px": 1008,
+  "mode": "RGB",
+  "frames_analyzed": 500,
+  "initial_neck_radius_px": 24.001026441758682,
+  "final_neck_radius_px": 265.4528369955582,
+  "minimum_mean_curvature_px_inv": 0.011952379075351311,
+  "maximum_mean_curvature_px_inv": 4.930806171161418,
+  "median_fit_rmse_px": 0.16863202340929181,
+  "fps": 200.0,
+  "analysis_runtime_s": 5.178208612000162,
+  "throughput_frames_per_s": 96.55848913488778,
+  "threshold": 96,
+  "polynomial_degree": 4,
+  "fit_half_width_px": 7
+}

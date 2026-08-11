@@ -1,0 +1,11 @@
+{
+  "frames_benchmarked": 100,
+  "boundaries_benchmarked": 200,
+  "legacy_fit_calls": 3000,
+  "optimized_fit_calls": 200,
+  "fit_call_reduction_x": 15.0,
+  "legacy_best_runtime_s": 0.09081976700008454,
+  "optimized_best_runtime_s": 0.00598550399990927,
+  "fit_stage_speedup_x": 15.17328649374576,
+  "note": "Benchmark isolates the local polynomial-fitting stage."
+}

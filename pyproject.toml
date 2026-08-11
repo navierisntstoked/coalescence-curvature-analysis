@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coalescence-curvature-analysis"
+version = "1.0.0"
+description = "Automated neck-radius and curvature extraction from high-speed TIFF stacks"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "matplotlib>=3.7",
+  "Pillow>=9.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
