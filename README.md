@@ -1,27 +1,17 @@
 # Automated Curvature Extraction from High-Speed Coalescence Videos
 
 This project converts a multi-frame TIFF stack into quantitative measurements
-of bridge radius and local interface curvature. It demonstrates an end-to-end
+of bridge radius and local interface curvature. It presents an end-to-end
 scientific Python workflow: streaming image ingestion, segmentation, feature
 engineering, numerical fitting, analytical differentiation, validation, and
 reproducible reporting.
 
 The included 500-frame video is synthetic and safe to share publicly. No raw
-experimental or publication data are included.
+experimental or publication data are included. Start with
+[`notebooks/coalescence_curvature_analysis.ipynb`](notebooks/coalescence_curvature_analysis.ipynb)
+for the complete, reproducible walkthrough.
 
-## Which notebook should I open?
-
-- **`notebooks/coalescence_neck_curvature_cleaned.ipynb`** is the faithful,
-  self-contained cleanup of the original 94-cell research notebook. It contains
-  the complete analysis code directly in the notebook and follows the original
-  workflow from TIFF ingestion through curvature export.
-- **`notebooks/curvature_analysis_demo.ipynb`** is the shorter production-style
-  demonstration. It imports the reusable functions from `src/` and shows how a
-  downstream user would run the packaged pipeline.
-
-Start with the self-contained notebook when reviewing the refactor. Use the
-modular demo when evaluating repository organization and reusable-code design.
-
+![Local curvature fit overlaid on a synthetic frame](results/frame_diagnostic.png)
 
 ## What the pipeline does
 
@@ -40,8 +30,9 @@ For each frame, the pipeline:
 
 7. Exports frame-level measurements, diagnostic overlays, and summary plots.
 
+![Bridge growth and curvature summary](results/curvature_summary.png)
 
-## Verified demo results
+## Verified results
 
 The bundled synthetic TIFF contains 500 RGB frames at 1008 x 504 pixels. With
 the default 200-fps metadata and a 96/255 intensity threshold, the verified run
@@ -53,21 +44,23 @@ produced:
 | End-to-end runtime | 5.18 s |
 | Processing throughput | 96.6 frames/s |
 | Median local-fit RMSE | 0.169 px |
-| Legacy polynomial-fit calls (100-frame benchmark) | 3,000 |
-| Refactored polynomial-fit calls | 200 |
+| Repeated per-point fit calls (100-frame benchmark) | 3,000 |
+| Single-pass boundary fit calls | 200 |
 | Fit-call reduction | 15.0x |
-| Isolated fitting-stage speedup | 15.2x |
+| Isolated fitting-stage speedup | 15.3x |
 
 Runtime measurements are environment-specific. The benchmark isolates the
-polynomial-fitting stage and compares the original repeated-fit loop with the
-one-fit-per-boundary implementation.
+polynomial-fitting stage and compares repeated per-point fitting with the
+single-pass boundary implementation.
 
-## Why the refactor matters
+## Performance optimization
 
-This implementation performs one fit per boundary per frame. This preserves the numerical result while reducing fit
-calls by 15x in the representative benchmark.
+A naive local-fitting loop can recompute the same polynomial once for every
+point in a 15-point window. This pipeline performs one fit per boundary per
+frame, preserving the numerical result while reducing fit calls by 15x in the
+representative benchmark.
 
-The refactor also:
+The implementation also:
 
 - replaces hard-coded local paths with command-line arguments;
 - centralizes frame rate, threshold, midpoint, fit degree, and window size;
@@ -84,18 +77,16 @@ coalescence-curvature-analysis/
 ├── data/
 │   └── michelle0912_sample.tif
 ├── notebooks/
-│   ├── coalescence_neck_curvature_cleaned.ipynb
-│   └── curvature_analysis_demo.ipynb
+│   └── coalescence_curvature_analysis.ipynb
 ├── results/
 │   ├── analysis_summary.json
 │   ├── benchmark.json
 │   ├── curvature_measurements.csv
-│   ├── curvature_measurements_self_contained.csv
 │   ├── curvature_summary.png
 │   └── frame_diagnostic.png
 ├── scripts/
 │   ├── analyze_video.py
-│   └── benchmark_refactor.py
+│   └── benchmark_fitting.py
 ├── src/coalescence_curvature/
 │   ├── __init__.py
 │   └── analysis.py
@@ -116,7 +107,7 @@ python -m pip install --upgrade pip
 python -m pip install -e .
 ```
 
-## Run the full demo
+## Run the full analysis
 
 ```bash
 python scripts/analyze_video.py data/michelle0912_sample.tif \
@@ -133,7 +124,7 @@ interface.
 ## Reproduce the optimization benchmark
 
 ```bash
-python scripts/benchmark_refactor.py data/michelle0912_sample.tif \
+python scripts/benchmark_fitting.py data/michelle0912_sample.tif \
   --frames 100 \
   --repeats 5
 ```
@@ -163,7 +154,7 @@ the intensity threshold with edge detection or active-contour segmentation.
 
 ## Portfolio summary
 
-- Built a memory-conscious Python image-analysis pipeline for 500-frame,
-- high-speed TIFF stacks; extracted bridge geometry and curvature through local
-- polynomial modeling, validated the method against analytical curvature, and
-- refactored a repeated-fit bottleneck to reduce fitting operations by 15x.
+> Built a memory-conscious Python image-analysis pipeline for 500-frame,
+> high-speed TIFF stacks; extracted bridge geometry and curvature through local
+> polynomial modeling, validated the method against analytical curvature, and
+> optimized a repeated-fit bottleneck to reduce fitting operations by 15x.
