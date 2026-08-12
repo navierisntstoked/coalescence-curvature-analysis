@@ -11,6 +11,7 @@ experimental or publication data are included. Start with
 [`notebooks/coalescence_curvature_analysis.ipynb`](notebooks/coalescence_curvature_analysis.ipynb)
 for the complete, reproducible walkthrough.
 
+This figure below shows an annotated experimental image of fluid-air interface, with relevant lengths labeled:
 ![Local curvature fit overlaid on a synthetic frame](results/frame_diagnostic.png)
 
 ## What the pipeline does
