@@ -64,9 +64,7 @@ one-fit-per-boundary implementation.
 
 ## Why the refactor matters
 
-The original research notebook recomputed the same polynomial once for every
-point in a local 15-point window. The cleaned implementation performs one fit
-per boundary per frame. This preserves the numerical result while reducing fit
+This implementation performs one fit per boundary per frame. This preserves the numerical result while reducing fit
 calls by 15x in the representative benchmark.
 
 The refactor also:
